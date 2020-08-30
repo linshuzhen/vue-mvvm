@@ -1,1 +1,58 @@
-11
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <div v-text="msg"></div>
+    <div v-text="person.name"></div>
+    <div v-html="htmlMsg"></div>
+    <input v-model="modelMsg"></inpaut>
+    <div>{{modelMsg}}</div>
+    <div>{{modelMsg}}</div>
+
+    <a v-bind:href="href">a标签</a>
+    <a :href="href">:a标签2</a>
+    <h2>{{person.age}}</h2>
+    <h2>{{person.fav}}</h2>
+    <button v-on:click="handelClick">点击</button>
+    <button @click="handelClick">@点击</button>
+
+  </div>
+<script src="./observer.js"></script>
+  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+  <script src="./Mvue.js"></script>
+  <script>
+    let vm = new MVue({
+      el: '#app',
+      data: {
+        person: {
+          name: '林菜菜',
+          age: 18,
+          fav: '小哥哥'
+        },
+        modelMsg: '12233',
+        msg: '学习mvvm',
+        htmlMsg: '<p>html</p>',
+        href: 'https://www.baidu.com/'
+      },
+      methods: {
+        handelClick(){
+          this.person = {
+            name: 'lsz',
+            age: 18,
+            fav: '1111'
+          }
+        }
+      }
+    })
+    // vue是采用数据劫持配合发布者-订阅者模式的方式，通过Object.defineProperty()来劫持各个属性的setter和getter，在数据变动时，发布消息给依赖收集器，去通知观察者，做出对应的回调函数去更新视图。
+
+    // mvvm作为绑定的入口，整合Observer，Compile和Watcher三者，通过Observer来监听model数据变化，通过Compile来解析编译模板指令，最终利用Watcher搭起Observer和Compile之间通信的桥梁，达到数据变化=》视图更新，视图交互变化=》数据model变更的双向绑定效果。
+  </script>
+</body>
+</html>
+
